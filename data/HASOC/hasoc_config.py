@@ -52,7 +52,6 @@ args = {
     'use_multiprocessing': True,
     "multiprocessing_chunksize": 500,
     'silent': False,
-    'cuda_device': 3,
 
     'wandb_project': None,
     'wandb_kwargs': {},

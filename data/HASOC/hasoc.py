@@ -71,7 +71,7 @@ for name, file in test_files_dict.items():
 print("Started Training")
 
 model = ClassificationModel(MODEL_TYPE, MODEL_NAME, args=args,
-                                    use_cuda=torch.cuda.is_available())  # You can set class weights by using the optional weight argument
+                                    use_cuda=torch.cuda.is_available(), cuda_device= 3)  # You can set class weights by using the optional weight argument
 
 if args["evaluate_during_training"]:
     for i in range(args["n_fold"]):
@@ -82,7 +82,7 @@ if args["evaluate_during_training"]:
         train_df, eval_df = train_test_split(train, test_size=0.2, random_state=SEED * i)
         model.train_model(train_df, eval_df=eval_df, macro_f1=macro_f1, weighted_f1=weighted_f1, accuracy=sklearn.metrics.accuracy_score)
         model = ClassificationModel(MODEL_TYPE, args["best_model_dir"], args=args,
-                                    use_cuda=torch.cuda.is_available())
+                                    use_cuda=torch.cuda.is_available(), cuda_device= 3)
 
         for test_instance in test_instances:
             predictions, raw_outputs = model.predict(test_instance.test_sentences)
