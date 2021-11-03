@@ -42,7 +42,7 @@ trac_test = pd.read_csv('data/TRAC/trac_test.csv', sep="\t")
 
 
 # Prepare training files
-train = pd.concat([hasoc_train], ignore_index=True)
+train = pd.concat([hateval_train], ignore_index=True)
 train = train.rename(columns={'Text': 'text', 'Class': 'labels'})
 train = train[['text', 'labels']]
 train = train.sample(frac=1).reset_index(drop=True)
