@@ -52,7 +52,7 @@ test_files_dict = {
     "HATEVAL": hateval_test,
     "HateXplain": hatexplain_test,
     "OHC": ohc_test,
-    "OLIC": olid_test,
+    "OLID": olid_test,
     "TCC": tcc_test,
     "TRAC": trac_test
 }
@@ -83,7 +83,8 @@ if args["evaluate_during_training"]:
                                     use_cuda=torch.cuda.is_available(), cuda_device=3)
 
         for test_instance in test_instances:
-            print("Predicting for " + test_instance.name)
+            print()
+            print("==================== Predicting for " + test_instance.name + "========================")
             predictions, raw_outputs = model.predict(test_instance.get_sentences())
             test_instance.test_preds[:, i] = predictions
 

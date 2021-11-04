@@ -15,7 +15,6 @@ from util.print_stat import print_information
 
 if not os.path.exists(TEMP_DIRECTORY): os.makedirs(TEMP_DIRECTORY)
 
-
 davidson_train = pd.read_csv('data/DAVIDSON/davidson_train.csv', sep="\t")
 davidson_test = pd.read_csv('data/DAVIDSON/davidson_test.csv', sep="\t")
 
@@ -40,7 +39,6 @@ tcc_test = pd.read_csv('data/TCC/tcc_test.csv', sep="\t")
 trac_train = pd.read_csv('data/TRAC/trac_train.csv', sep="\t")
 trac_test = pd.read_csv('data/TRAC/trac_test.csv', sep="\t")
 
-
 # Prepare training files
 train = pd.concat([hateval_train], ignore_index=True)
 train = train.rename(columns={'Text': 'text', 'Class': 'labels'})
@@ -48,18 +46,16 @@ train = train[['text', 'labels']]
 train = train.sample(frac=1).reset_index(drop=True)
 train['labels'] = encode(train["labels"])
 
-
 test_files_dict = {
-  "DAVIDSON": davidson_test,
-  "HASOC": hasoc_test,
-  "HATEVAL": hateval_test,
-  "HateXplain": hatexplain_test,
+    "DAVIDSON": davidson_test,
+    "HASOC": hasoc_test,
+    "HATEVAL": hateval_test,
+    "HateXplain": hatexplain_test,
     "OHC": ohc_test,
-    "OLIC": olid_test,
+    "OLID": olid_test,
     "TCC": tcc_test,
     "TRAC": trac_test
 }
-
 
 test_instances = []
 
@@ -71,7 +67,8 @@ for name, file in test_files_dict.items():
 print("Started Training")
 
 model = ClassificationModel(MODEL_TYPE, MODEL_NAME, args=args,
-                                    use_cuda=torch.cuda.is_available(), cuda_device= 2)  # You can set class weights by using the optional weight argument
+                            use_cuda=torch.cuda.is_available(),
+                            cuda_device=3)  # You can set class weights by using the optional weight argument
 
 if args["evaluate_during_training"]:
     for i in range(args["n_fold"]):
@@ -80,16 +77,18 @@ if args["evaluate_during_training"]:
         print("Started Fold {}".format(i))
 
         train_df, eval_df = train_test_split(train, test_size=0.2, random_state=SEED * i)
-        model.train_model(train_df, eval_df=eval_df, macro_f1=macro_f1, weighted_f1=weighted_f1, accuracy=sklearn.metrics.accuracy_score)
+        model.train_model(train_df, eval_df=eval_df, macro_f1=macro_f1, weighted_f1=weighted_f1,
+                          accuracy=sklearn.metrics.accuracy_score)
         model = ClassificationModel(MODEL_TYPE, args["best_model_dir"], args=args,
-                                    use_cuda=torch.cuda.is_available(), cuda_device= 2)
+                                    use_cuda=torch.cuda.is_available(), cuda_device=3)
 
         for test_instance in test_instances:
-            predictions, raw_outputs = model.predict(test_instance.test_sentences)
+            print()
+            print("==================== Predicting for " + test_instance.name + "========================")
+            predictions, raw_outputs = model.predict(test_instance.get_sentences())
             test_instance.test_preds[:, i] = predictions
 
         print("Completed Fold {}".format(i))
-
 
     # select majority class of each instance (row)
     for test_instance in test_instances:
@@ -102,9 +101,10 @@ if args["evaluate_during_training"]:
 else:
     model.train_model(train, macro_f1=macro_f1, weighted_f1=weighted_f1, accuracy=sklearn.metrics.accuracy_score)
     for test_instance in test_instances:
-        predictions, raw_outputs = model.predict(test_instance.test_sentences)
+        print()
+        print("==================== Predicting for " + test_instance.name + "========================")
+        predictions, raw_outputs = model.predict(test_instance.get_sentences())
         test_instance.df['predictions'] = predictions
-
 
 for test_instance in test_instances:
     print(test_instance.name)
