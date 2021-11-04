@@ -84,7 +84,6 @@ if args["evaluate_during_training"]:
 
         for test_instance in test_instances:
             print("Predicting for " + test_instance.name)
-            print(test_instance.get_sentences())
             predictions, raw_outputs = model.predict(test_instance.get_sentences())
             test_instance.test_preds[:, i] = predictions
 
