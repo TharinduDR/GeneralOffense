@@ -85,7 +85,9 @@ if args["evaluate_during_training"]:
                                     use_cuda=torch.cuda.is_available(), cuda_device= 3)
 
         for test_instance in test_instances:
-            predictions, raw_outputs = model.predict(test_instance.test_sentences)
+            print("Predicting for " + test_instance.name)
+            print(test_instance.get_sentences())
+            predictions, raw_outputs = model.predict(test_instance.get_sentences())
             test_instance.test_preds[:, i] = predictions
 
         print("Completed Fold {}".format(i))
