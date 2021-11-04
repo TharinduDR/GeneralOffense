@@ -47,9 +47,9 @@ args = {
     'overwrite_output_dir': True,
     'reprocess_input_data': True,
 
-    'process_count': cpu_count() - 2 if cpu_count() > 2 else 1,
+    'process_count': 1,
     'n_gpu': 1,
-    'use_multiprocessing': True,
+    'use_multiprocessing': False,
     "multiprocessing_chunksize": 500,
     'silent': False,
 
