@@ -40,7 +40,7 @@ trac_train = pd.read_csv('data/TRAC/trac_train.csv', sep="\t")
 trac_test = pd.read_csv('data/TRAC/trac_test.csv', sep="\t")
 
 # Prepare training files
-train = pd.concat([ohc_train], ignore_index=True)
+train = pd.concat([davidson_train, hasoc_train, hateval_train, hatexplain_train, olid_train, tcc_train, trac_train], ignore_index=True)
 train = train.rename(columns={'Text': 'text', 'Class': 'labels'})
 train = train[['text', 'labels']]
 train = train.sample(frac=1).reset_index(drop=True)
