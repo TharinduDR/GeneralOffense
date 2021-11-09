@@ -76,13 +76,13 @@ if args["evaluate_during_training"]:
 
         model = ClassificationModel(MODEL_TYPE, MODEL_NAME, args=args,
                                     use_cuda=torch.cuda.is_available(),
-                                    cuda_device=2)
+                                    cuda_device=1)
 
         train_df, eval_df = train_test_split(train, test_size=0.2, random_state=SEED * i)
         model.train_model(train_df, eval_df=eval_df, macro_f1=macro_f1, weighted_f1=weighted_f1,
                           accuracy=sklearn.metrics.accuracy_score)
         model = ClassificationModel(MODEL_TYPE, args["best_model_dir"], args=args,
-                                    use_cuda=torch.cuda.is_available(), cuda_device=2)
+                                    use_cuda=torch.cuda.is_available(), cuda_device=1)
 
         for test_instance in test_instances:
             predictions, raw_outputs = model.predict(test_instance.get_sentences())
@@ -102,7 +102,7 @@ if args["evaluate_during_training"]:
 else:
     model = ClassificationModel(MODEL_TYPE, MODEL_NAME, args=args,
                                 use_cuda=torch.cuda.is_available(),
-                                cuda_device=2)
+                                cuda_device=1)
     model.train_model(train, macro_f1=macro_f1, weighted_f1=weighted_f1, accuracy=sklearn.metrics.accuracy_score)
     for test_instance in test_instances:
         predictions, raw_outputs = model.predict(test_instance.get_sentences())
