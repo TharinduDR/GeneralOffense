@@ -7,7 +7,7 @@ import torch
 from deepoffense.classification import ClassificationModel
 from sklearn.model_selection import train_test_split
 
-from data.OHC.leave_ohc_config import TEMP_DIRECTORY, MODEL_TYPE, MODEL_NAME, args, SEED
+from data.OHC.ohc_config import TEMP_DIRECTORY, MODEL_TYPE, MODEL_NAME, args, SEED
 from util.TestInstance import TestInstance
 from util.evaluation import macro_f1, weighted_f1
 from util.label_converter import encode, decode
