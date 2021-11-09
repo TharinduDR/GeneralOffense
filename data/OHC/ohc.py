@@ -66,7 +66,7 @@ for name, file in test_files_dict.items():
 # Train the model
 print("Started Training")
 
-  # You can set class weights by using the optional weight argument
+# You can set class weights by using the optional weight argument
 
 if args["evaluate_during_training"]:
     for i in range(args["n_fold"]):
@@ -114,5 +114,3 @@ for test_instance in test_instances:
     test_instance.df['predictions'] = decode(test_instance.df['predictions'])
     test_instance.df['labels'] = decode(test_instance.df['labels'])
     print_information(test_instance.df, "predictions", "labels")
-
-

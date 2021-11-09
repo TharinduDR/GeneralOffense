@@ -1,6 +1,6 @@
 from multiprocessing import cpu_count
 
-TEMP_DIRECTORY = "temp_leave_ohc/data"
+TEMP_DIRECTORY = "temp_ohc/data"
 MODEL_TYPE = "bert"
 MODEL_NAME = "bert-large-cased"
 SEED = 777
@@ -8,9 +8,9 @@ SEED = 777
 # training instances = 7000 > if batch size=8, batches = 875 > evaluate during training steps -> 80 or 175
 
 args = {
-    'output_dir': 'temp_leave_ohc/outputs/',
-    "best_model_dir": "temp_leave_ohc/outputs/best_model",
-    'cache_dir': 'temp_leave_ohc/cache_dir/',
+    'output_dir': 'temp_ohc/outputs/',
+    "best_model_dir": "temp_ohc/outputs/best_model",
+    'cache_dir': 'temp_ohc/cache_dir/',
 
     'fp16': False,
     'fp16_opt_level': 'O1',
@@ -28,15 +28,15 @@ args = {
     'do_lower_case': False,
     'n_fold': 3,
 
-    'logging_steps': 2800,
-    'save_steps': 2800,
+    'logging_steps': 120,
+    'save_steps': 120,
     "no_cache": False,
     "no_save": False,
     "save_recent_only": True,
     'save_model_every_epoch': True,
     'evaluate_during_training': True,
     "evaluate_during_training_silent": True,
-    'evaluate_during_training_steps': 2800,
+    'evaluate_during_training_steps': 120,
     "evaluate_during_training_verbose": True,
     'use_cached_eval_features': False,
     "save_best_model": True,
