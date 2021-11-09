@@ -54,8 +54,7 @@ args = {
     'silent': False,
 
     'wandb_project': "General Offense",
-    'wandb_kwargs': {"name": "DAVIDSON"},
-
+    'wandb_kwargs': {'name': 'DAVIDSON'},
     "use_early_stopping": True,
     "early_stopping_patience": 10,
     "early_stopping_delta": 0,
