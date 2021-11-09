@@ -66,9 +66,7 @@ for name, file in test_files_dict.items():
 # Train the model
 print("Started Training")
 
-model = ClassificationModel(MODEL_TYPE, MODEL_NAME, args=args,
-                            use_cuda=torch.cuda.is_available(),
-                            cuda_device=3)  # You can set class weights by using the optional weight argument
+# You can set class weights by using the optional weight argument
 
 if args["evaluate_during_training"]:
     for i in range(args["n_fold"]):
@@ -76,6 +74,9 @@ if args["evaluate_during_training"]:
             shutil.rmtree(args['output_dir'])
         print("Started Fold {}".format(i))
 
+        model = ClassificationModel(MODEL_TYPE, MODEL_NAME, args=args,
+                                    use_cuda=torch.cuda.is_available(),
+                                    cuda_device=3)
         train_df, eval_df = train_test_split(train, test_size=0.2, random_state=SEED * i)
         model.train_model(train_df, eval_df=eval_df, macro_f1=macro_f1, weighted_f1=weighted_f1,
                           accuracy=sklearn.metrics.accuracy_score)
@@ -83,10 +84,10 @@ if args["evaluate_during_training"]:
                                     use_cuda=torch.cuda.is_available(), cuda_device=3)
 
         for test_instance in test_instances:
-            print()
-            print("==================== Predicting for " + test_instance.name + "========================")
             predictions, raw_outputs = model.predict(test_instance.get_sentences())
             test_instance.test_preds[:, i] = predictions
+
+        model = None
 
         print("Completed Fold {}".format(i))
 
@@ -99,13 +100,17 @@ if args["evaluate_during_training"]:
         test_instance.df['predictions'] = final_predictions
 
 else:
+    model = ClassificationModel(MODEL_TYPE, MODEL_NAME, args=args,
+                                use_cuda=torch.cuda.is_available(),
+                                cuda_device=3)
     model.train_model(train, macro_f1=macro_f1, weighted_f1=weighted_f1, accuracy=sklearn.metrics.accuracy_score)
     for test_instance in test_instances:
         predictions, raw_outputs = model.predict(test_instance.get_sentences())
         test_instance.df['predictions'] = predictions
 
 for test_instance in test_instances:
-    print(test_instance.name)
+    print()
+    print("==================== Results for " + test_instance.name + "========================")
     test_instance.df['predictions'] = decode(test_instance.df['predictions'])
     test_instance.df['labels'] = decode(test_instance.df['labels'])
     print_information(test_instance.df, "predictions", "labels")
