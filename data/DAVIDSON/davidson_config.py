@@ -53,7 +53,7 @@ args = {
     "multiprocessing_chunksize": 500,
     'silent': False,
 
-    'wandb_project': "General Offense",
+    'wandb_project': "GeneralOffense",
     'wandb_kwargs': {},
     "use_early_stopping": True,
     "early_stopping_patience": 10,
