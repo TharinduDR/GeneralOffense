@@ -95,5 +95,4 @@ for test_instance in test_instances:
     print()
     print("==================== Results for " + test_instance.name + "========================")
     test_instance.df['predictions'] = decode(test_instance.df['predictions'])
-    test_instance.df['labels'] = decode(test_instance.df['Class'])
     print_information(test_instance.df, "predictions", "Class")
