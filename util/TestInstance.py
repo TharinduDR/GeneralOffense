@@ -12,4 +12,4 @@ class TestInstance:
         self.test_preds = np.zeros((len(self.df), self.args["n_fold"]))
 
     def get_sentences(self):
-        return self.df['text'].tolist()
+        return self.df['Text'].tolist()
