@@ -1,7 +1,7 @@
 args = {
-    'output_dir': 'temp/outputs/',
-    "best_model_dir": "temp/outputs/best_model",
-    'cache_dir': 'temp/cache_dir/',
+    'output_dir': 'hasoc_temp/outputs/',
+    "best_model_dir": "hasoc_temp/outputs/best_model",
+    'cache_dir': 'hasoc_temp/cache_dir/',
 
     "early_stopping": True,
     "early_stopping_min_delta" : 0.0001,
