@@ -8,7 +8,6 @@ from util.TestInstance import TestInstance
 from util.label_converter import encode, decode
 from util.print_stat import print_information
 
-
 davidson_train = pd.read_csv('data/DAVIDSON/davidson_train.csv', sep="\t")
 davidson_test = pd.read_csv('data/DAVIDSON/davidson_test.csv', sep="\t")
 
@@ -35,10 +34,10 @@ trac_test = pd.read_csv('data/TRAC/trac_test.csv', sep="\t")
 
 # Prepare training files
 train = pd.concat([davidson_train], ignore_index=True)
-# train = train.rename(columns={'Text': 'text', 'Class': 'labels'})
-train = train[['Text', 'Class']]
+train = train.rename(columns={'Text': 'text', 'Class': 'labels'})
+train = train[['text', 'labels']]
 train = train.sample(frac=1).reset_index(drop=True)
-train['Class'] = encode(train["Class"])
+train['labels'] = encode(train["labels"])
 
 test_files_dict = {
     "DAVIDSON": davidson_test,
@@ -60,15 +59,13 @@ for name, file in test_files_dict.items():
 # Train the model
 print("Started Training")
 
-# You can set class weights by using the optional weight argument
-
 
 for i in range(args["n_fold"]):
     print("Started Fold {}".format(i))
 
     train_df, eval_df = train_test_split(train, test_size=0.2,  random_state=args["manual_seed"])
 
-    model = OffensiveNNModel(model_type_or_path="cnn2D", embedding_model_name="word2vec-google-news-300",
+    model = OffensiveNNModel(model_type_or_path="rnn", embedding_model_name="word2vec-google-news-300",
                                  train_df=train_df, args=args, eval_df=eval_df)
     model.train_model()
     model = OffensiveNNModel(model_type_or_path=args["best_model_dir"])
@@ -95,4 +92,5 @@ for test_instance in test_instances:
     print()
     print("==================== Results for " + test_instance.name + "========================")
     test_instance.df['predictions'] = decode(test_instance.df['predictions'])
-    print_information(test_instance.df, "predictions", "Class")
+    test_instance.df['labels'] = decode(test_instance.df['labels'])
+    print_information(test_instance.df, "predictions", "labels")
