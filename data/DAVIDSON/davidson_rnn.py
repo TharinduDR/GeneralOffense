@@ -65,7 +65,7 @@ for i in range(args["n_fold"]):
 
     train_df, eval_df = train_test_split(train, test_size=0.2,  random_state=args["manual_seed"])
 
-    model = OffensiveNNModel(model_type_or_path="rnn", embedding_model_name="word2vec-google-news-300",
+    model = OffensiveNNModel(model_type_or_path="lstm", embedding_model_name="word2vec-google-news-300",
                                  train_df=train_df, args=args, eval_df=eval_df)
     model.train_model()
     model = OffensiveNNModel(model_type_or_path=args["best_model_dir"])
