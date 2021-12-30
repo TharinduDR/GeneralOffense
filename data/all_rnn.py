@@ -65,29 +65,29 @@ print("Started Training")
 
 # You can set class weights by using the optional weight argument
 
-if args["evaluate_during_training"]:
-    for i in range(args["n_fold"]):
-        train_df, eval_df = train_test_split(train, test_size=0.2, random_state=args["manual_seed"])
 
-        model = OffensiveNNModel(model_type_or_path="lstm", embedding_model_name="word2vec-google-news-300",
+for i in range(args["n_fold"]):
+    train_df, eval_df = train_test_split(train, test_size=0.2, random_state=args["manual_seed"])
+
+    model = OffensiveNNModel(model_type_or_path="lstm", embedding_model_name="word2vec-google-news-300",
                                  train_df=train_df, args=args, eval_df=eval_df)
-        model.train_model()
-        model = OffensiveNNModel(model_type_or_path=args["best_model_dir"])
+    model.train_model()
+    model = OffensiveNNModel(model_type_or_path=args["best_model_dir"])
 
-        for test_instance in test_instances:
-            predictions, raw_outputs = model.predict(test_instance.get_sentences())
-            test_instance.test_preds[:, i] = predictions
+    for test_instance in test_instances:
+        predictions, raw_outputs = model.predict(test_instance.get_sentences())
+        test_instance.test_preds[:, i] = predictions
 
-        model = None
-        print("Completed Fold {}".format(i))
+    model = None
+    print("Completed Fold {}".format(i))
 
     # select majority class of each instance (row)
-    for test_instance in test_instances:
-        final_predictions = []
-        for row in test_instance.test_preds:
-            row = row.tolist()
-            final_predictions.append(int(max(set(row), key=row.count)))
-        test_instance.df['predictions'] = final_predictions
+for test_instance in test_instances:
+    final_predictions = []
+    for row in test_instance.test_preds:
+        row = row.tolist()
+        final_predictions.append(int(max(set(row), key=row.count)))
+    test_instance.df['predictions'] = final_predictions
 
 
 for test_instance in test_instances:
