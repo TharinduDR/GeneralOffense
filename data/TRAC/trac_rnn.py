@@ -3,7 +3,7 @@ import pandas as pd
 from offensive_nn.offensive_nn_model import OffensiveNNModel
 from sklearn.model_selection import train_test_split
 
-from data.TCC.tcc_rnn_config import args
+from data.TRAC.trac_rnn_config import args
 from util.TestInstance import TestInstance
 from util.label_converter import encode, decode
 from util.print_stat import print_information
