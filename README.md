@@ -1,1 +1,3 @@
-# GeneralOffense
+# GeneralOffense - Generalising Offensive Language Indeitification
+Most available offensive language identification datasets are often not directly comparable as they have been annotated using different guidelines aiming at different abusive language identification sub-tasks (e.g. hate speech, cyberbulling, toxicity,). Furthermore, they often contain data retrieved from various platforms (e.g. Twitter, Facebook, Gab, and Reddit) using different criteria (e.g. keywords).
+In this project, we find various generalisable patterns in different offensive language identification datasets.
