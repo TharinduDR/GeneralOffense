@@ -41,6 +41,7 @@ trac_test = pd.read_csv('data/TRAC/trac_test.csv', sep="\t")
 
 # Prepare training files
 train = pd.concat([hateval_train], ignore_index=True)
+test_all = pd.concat([davidson_test, hasoc_test, hateval_test, hatexplain_test, ohc_test, olid_test, tcc_test, trac_test], ignore_index=True)
 train = train.rename(columns={'Text': 'text', 'Class': 'labels'})
 train = train[['text', 'labels']]
 train = train.sample(frac=1).reset_index(drop=True)
@@ -54,7 +55,8 @@ test_files_dict = {
     "OHC": ohc_test,
     "OLID": olid_test,
     "TCC": tcc_test,
-    "TRAC": trac_test
+    "TRAC": trac_test,
+    "All": test_all
 }
 
 test_instances = []
