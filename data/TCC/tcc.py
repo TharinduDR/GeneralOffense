@@ -80,7 +80,7 @@ if args["evaluate_during_training"]:
 
         model = ClassificationModel(MODEL_TYPE, MODEL_NAME, args=args,
                                     use_cuda=torch.cuda.is_available(),
-                                    cuda_device=1)
+                                    cuda_device=0)
 
         model.train_model(train_df, eval_df=eval_df, macro_f1=macro_f1, weighted_f1=weighted_f1,
                           accuracy=sklearn.metrics.accuracy_score)
