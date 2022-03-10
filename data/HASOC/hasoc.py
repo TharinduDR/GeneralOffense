@@ -17,27 +17,43 @@ if not os.path.exists(TEMP_DIRECTORY): os.makedirs(TEMP_DIRECTORY)
 
 davidson_train = pd.read_csv('data/DAVIDSON/davidson_train.csv', sep="\t")
 davidson_test = pd.read_csv('data/DAVIDSON/davidson_test.csv', sep="\t")
+davidson_test_rs = pd.read_csv('data/DAVIDSON/davidson_test_rs.csv', sep="\t")
+davidson_test_sr = pd.read_csv('data/DAVIDSON/davidson_test_sr.csv', sep="\t")
 
 hasoc_train = pd.read_csv('data/HASOC/hasoc_train.csv', sep="\t")
 hasoc_test = pd.read_csv('data/HASOC/hasoc_test.csv', sep="\t")
+hasoc_test_sr = pd.read_csv('data/HASOC/hasoc_test_sr.csv', sep="\t")
+hasoc_test_rs = pd.read_csv('data/HASOC/hasoc_test_rs.csv', sep="\t")
 
 hateval_train = pd.read_csv('data/HATEVAL/hateval_train.csv', sep="\t")
 hateval_test = pd.read_csv('data/HATEVAL/hateval_test.csv', sep="\t")
+hateval_test_sr = pd.read_csv('data/HATEVAL/hateval_test_sr.csv', sep="\t")
+hateval_test_rs = pd.read_csv('data/HATEVAL/hateval_test_rs.csv', sep="\t")
 
 hatexplain_train = pd.read_csv('data/HateXplain/hatexplain_train.csv', sep="\t")
 hatexplain_test = pd.read_csv('data/HateXplain/hatexplain_test.csv', sep="\t")
+hatexplain_test_sr = pd.read_csv('data/HateXplain/hatexplain_test_sr.csv', sep="\t")
+hatexplain_test_rs = pd.read_csv('data/HateXplain/hatexplain_test_rs.csv', sep="\t")
 
 ohc_train = pd.read_csv('data/OHC/ohc_train.csv', sep="\t")
 ohc_test = pd.read_csv('data/OHC/ohc_test.csv', sep="\t")
+ohc_test_sr = pd.read_csv('data/OHC/ohc_test_sr.csv', sep="\t")
+ohc_test_rs = pd.read_csv('data/OHC/ohc_test_rs.csv', sep="\t")
 
 olid_train = pd.read_csv('data/OLID/olid_train.csv', sep="\t")
 olid_test = pd.read_csv('data/OLID/olid_test.csv', sep="\t")
+olid_test_sr = pd.read_csv('data/OLID/olid_test_sr.csv', sep="\t")
+olid_test_rs = pd.read_csv('data/OLID/olid_test_rs.csv', sep="\t")
 
 tcc_train = pd.read_csv('data/TCC/tcc_train.csv', sep="\t")
 tcc_test = pd.read_csv('data/TCC/tcc_test.csv', sep="\t")
+tcc_test_sr = pd.read_csv('data/TCC/tcc_test_rs.csv', sep="\t")
+tcc_test_rs = pd.read_csv('data/TCC/tcc_test_rs.csv', sep="\t")
 
 trac_train = pd.read_csv('data/TRAC/trac_train.csv', sep="\t")
 trac_test = pd.read_csv('data/TRAC/trac_test.csv', sep="\t")
+trac_test_sr = pd.read_csv('data/TRAC/trac_test_sr.csv', sep="\t")
+trac_test_rs = pd.read_csv('data/TRAC/trac_test_rs.csv', sep="\t")
 
 # Prepare training files
 train = pd.concat([hasoc_train], ignore_index=True)
@@ -49,13 +65,29 @@ train['labels'] = encode(train["labels"])
 
 test_files_dict = {
     "DAVIDSON": davidson_test,
+    "DAVIDSON_RS": davidson_test_rs,
+    "DAVIDSON_SR": davidson_test_sr,
     "HASOC": hasoc_test,
+    "HASOC_RS": hasoc_test_rs,
+    "HASOC_SR": hasoc_test_sr,
     "HATEVAL": hateval_test,
+    "HATEVAL_SR": hateval_test_sr,
+    "HATEVAL_RS": hateval_test_rs,
     "HateXplain": hatexplain_test,
+    "HateXplain_SR": hatexplain_test_sr,
+    "HateXplain_RS": hatexplain_test_rs,
     "OHC": ohc_test,
+    "OHC_RS": ohc_test_rs,
+    "OHC_SR": ohc_test_sr,
     "OLID": olid_test,
+    "OLID_SR": olid_test_sr,
+    "OLID_RS": olid_test_rs,
     "TCC": tcc_test,
+    "TCC_SR": tcc_test_sr,
+    "TCC_RS": tcc_test_rs,
     "TRAC": trac_test,
+    "TRAC_SR": trac_test_sr,
+    "TRAC_RS": trac_test_rs,
     "All": test_all
 }
 
@@ -78,13 +110,13 @@ if args["evaluate_during_training"]:
 
         model = ClassificationModel(MODEL_TYPE, MODEL_NAME, args=args,
                                     use_cuda=torch.cuda.is_available(),
-                                    cuda_device=1)
+                                    cuda_device=2)
 
         train_df, eval_df = train_test_split(train, test_size=0.2, random_state=SEED * i)
         model.train_model(train_df, eval_df=eval_df, macro_f1=macro_f1, weighted_f1=weighted_f1,
                           accuracy=sklearn.metrics.accuracy_score)
         model = ClassificationModel(MODEL_TYPE, args["best_model_dir"], args=args,
-                                    use_cuda=torch.cuda.is_available(), cuda_device=1)
+                                    use_cuda=torch.cuda.is_available(), cuda_device=2)
 
         for test_instance in test_instances:
             predictions, raw_outputs = model.predict(test_instance.get_sentences())
