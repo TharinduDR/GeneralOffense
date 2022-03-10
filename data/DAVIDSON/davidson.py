@@ -32,7 +32,7 @@ hateval_test_rs = pd.read_csv('data/HATEVAL/hateval_test_rs.csv', sep="\t")
 
 hatexplain_train = pd.read_csv('data/HateXplain/hatexplain_train.csv', sep="\t")
 hatexplain_test = pd.read_csv('data/HateXplain/hatexplain_test.csv', sep="\t")
-hatexplain_test_sr = pd.read_csv('data/HateXplain/hatexplain_sr_test.csv', sep="\t")
+hatexplain_test_sr = pd.read_csv('data/HateXplain/hatexplain_test_sr.csv', sep="\t")
 hatexplain_test_rs = pd.read_csv('data/HateXplain/hatexplain_test_rs.csv', sep="\t")
 
 ohc_train = pd.read_csv('data/OHC/ohc_train.csv', sep="\t")
