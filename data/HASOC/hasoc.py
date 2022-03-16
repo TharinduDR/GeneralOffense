@@ -47,7 +47,7 @@ olid_test_rs = pd.read_csv('data/OLID/olid_test_rs.csv', sep="\t")
 
 tcc_train = pd.read_csv('data/TCC/tcc_train.csv', sep="\t")
 tcc_test = pd.read_csv('data/TCC/tcc_test.csv', sep="\t")
-tcc_test_sr = pd.read_csv('data/TCC/tcc_test_rs.csv', sep="\t")
+tcc_test_sr = pd.read_csv('data/TCC/tcc_test_sr.csv', sep="\t")
 tcc_test_rs = pd.read_csv('data/TCC/tcc_test_rs.csv', sep="\t")
 
 trac_train = pd.read_csv('data/TRAC/trac_train.csv', sep="\t")
