@@ -17,8 +17,8 @@ if not os.path.exists(TEMP_DIRECTORY): os.makedirs(TEMP_DIRECTORY)
 
 davidson_train = pd.read_csv('data/DAVIDSON/davidson_train.csv', sep="\t")
 davidson_test = pd.read_csv('data/DAVIDSON/davidson_test.csv', sep="\t")
-davidson_test_rs = pd.read_csv('data/DAVIDSON/davidson_test_rs.csv', sep="\t")
 davidson_test_sr = pd.read_csv('data/DAVIDSON/davidson_test_sr.csv', sep="\t")
+davidson_test_rs = pd.read_csv('data/DAVIDSON/davidson_test_rs.csv', sep="\t")
 
 hasoc_train = pd.read_csv('data/HASOC/hasoc_train.csv', sep="\t")
 hasoc_test = pd.read_csv('data/HASOC/hasoc_test.csv', sep="\t")
@@ -71,23 +71,23 @@ test_files_dict = {
     "HASOC_RS": hasoc_test_rs,
     "HASOC_SR": hasoc_test_sr,
     "HATEVAL": hateval_test,
-    "HATEVAL_SR": hateval_test_sr,
     "HATEVAL_RS": hateval_test_rs,
+    "HATEVAL_SR": hateval_test_sr,
     "HateXplain": hatexplain_test,
-    "HateXplain_SR": hatexplain_test_sr,
     "HateXplain_RS": hatexplain_test_rs,
+    "HateXplain_SR": hatexplain_test_sr,
     "OHC": ohc_test,
     "OHC_RS": ohc_test_rs,
     "OHC_SR": ohc_test_sr,
     "OLID": olid_test,
-    "OLID_SR": olid_test_sr,
     "OLID_RS": olid_test_rs,
+    "OLID_SR": olid_test_sr,
     "TCC": tcc_test,
-    "TCC_SR": tcc_test_sr,
     "TCC_RS": tcc_test_rs,
+    "TCC_SR": tcc_test_sr,
     "TRAC": trac_test,
-    "TRAC_SR": trac_test_sr,
     "TRAC_RS": trac_test_rs,
+    "TRAC_SR": trac_test_sr,
     "All": test_all
 }
 
@@ -110,12 +110,12 @@ if args["evaluate_during_training"]:
 
         model = ClassificationModel(MODEL_TYPE, MODEL_NAME, args=args,
                                     use_cuda=torch.cuda.is_available(),
-                                    cuda_device=1)
+                                    cuda_device=3)
         train_df, eval_df = train_test_split(train, test_size=0.2, random_state=SEED * i)
         model.train_model(train_df, eval_df=eval_df, macro_f1=macro_f1, weighted_f1=weighted_f1,
                           accuracy=sklearn.metrics.accuracy_score)
         model = ClassificationModel(MODEL_TYPE, args["best_model_dir"], args=args,
-                                    use_cuda=torch.cuda.is_available(), cuda_device=1)
+                                    use_cuda=torch.cuda.is_available(), cuda_device=3)
 
         for test_instance in test_instances:
             predictions, raw_outputs = model.predict(test_instance.get_sentences())
