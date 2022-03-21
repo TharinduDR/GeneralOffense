@@ -119,7 +119,7 @@ if args["evaluate_during_training"]:
         model.train_model(train_df, eval_df=eval_df, macro_f1=macro_f1, weighted_f1=weighted_f1,
                           accuracy=sklearn.metrics.accuracy_score)
         model = ClassificationModel(MODEL_TYPE, args["best_model_dir"], args=args,
-                                    use_cuda=torch.cuda.is_available(), cuda_device=0)
+                                    use_cuda=torch.cuda.is_available(), cuda_device=1)
 
         for test_instance in test_instances:
             predictions, raw_outputs = model.predict(test_instance.get_sentences())
