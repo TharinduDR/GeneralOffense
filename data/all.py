@@ -60,6 +60,10 @@ train = pd.concat(
     [davidson_train, hasoc_train, hateval_train, hatexplain_train, ohc_train, olid_train, tcc_train, trac_train],
     ignore_index=True)
 test_all = pd.concat([davidson_test, hasoc_test, hateval_test, hatexplain_test, ohc_test, olid_test, tcc_test, trac_test], ignore_index=True)
+test_all_sr = pd.concat([davidson_test_sr, hasoc_test_sr, hateval_test_sr, hatexplain_test_sr, ohc_test_sr, olid_test_sr, tcc_test_sr, trac_test_sr], ignore_index=True)
+test_all_rs = pd.concat([davidson_test_rs, hasoc_test_rs, hateval_test_rs, hatexplain_test_rs, ohc_test_rs, olid_test_rs, tcc_test_rs, trac_test_rs], ignore_index=True)
+
+
 train = train.rename(columns={'Text': 'text', 'Class': 'labels'})
 train = train[['text', 'labels']]
 train = train.sample(frac=1).reset_index(drop=True)
@@ -73,24 +77,26 @@ test_files_dict = {
     "HASOC_RS": hasoc_test_rs,
     "HASOC_SR": hasoc_test_sr,
     "HATEVAL": hateval_test,
-    "HATEVAL_SR": hateval_test_sr,
     "HATEVAL_RS": hateval_test_rs,
+    "HATEVAL_SR": hateval_test_sr,
     "HateXplain": hatexplain_test,
-    "HateXplain_SR": hatexplain_test_sr,
     "HateXplain_RS": hatexplain_test_rs,
+    "HateXplain_SR": hatexplain_test_sr,
     "OHC": ohc_test,
     "OHC_RS": ohc_test_rs,
     "OHC_SR": ohc_test_sr,
     "OLID": olid_test,
-    "OLID_SR": olid_test_sr,
     "OLID_RS": olid_test_rs,
+    "OLID_SR": olid_test_sr,
     "TCC": tcc_test,
-    "TCC_SR": tcc_test_sr,
     "TCC_RS": tcc_test_rs,
+    "TCC_SR": tcc_test_sr,
     "TRAC": trac_test,
-    "TRAC_SR": trac_test_sr,
     "TRAC_RS": trac_test_rs,
-    "All": test_all
+    "TRAC_SR": trac_test_sr,
+    "All": test_all,
+    "All_RS": test_all_rs,
+    "All_SR": test_all_sr
 }
 
 test_instances = []
