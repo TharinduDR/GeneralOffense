@@ -66,6 +66,8 @@ train = train[['text', 'labels']]
 train = train.sample(frac=1).reset_index(drop=True)
 train['labels'] = encode(train["labels"])
 
+train = train[:1000]
+
 test_files_dict = {
     "DAVIDSON": davidson_test,
     "DAVIDSON_RS": davidson_test_rs,
