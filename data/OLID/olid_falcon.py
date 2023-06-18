@@ -38,7 +38,7 @@ final_predictions = []
 for index, row in test.iterrows():
     question = "Is this comment offensive or not? Comment: " + row['Text']
     response = llm_chain.run(question)
-    if response.split('","')[0].strip() == "Yes":
+    if response.split(',')[0].strip() == "Yes":
         final_predictions.append("OFF")
     else:
         final_predictions.append("NOT")
