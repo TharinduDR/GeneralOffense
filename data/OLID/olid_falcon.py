@@ -36,7 +36,7 @@ test = pd.read_csv('data/OLID/olid_test.csv', sep="\t")
 final_predictions = []
 
 for index, row in test.iterrows():
-    question = "Is this comment offensive or not? Comment: " + row['tweet']
+    question = "Is this comment offensive or not? Comment: " + row['Text']
     response = llm_chain.run(question)
     if response.split('","')[0].strip() == "Yes":
         final_predictions.append("OFF")
@@ -45,7 +45,7 @@ for index, row in test.iterrows():
 
 
 test['predictions'] = final_predictions
-print_information(test, "predictions", "labels")
+print_information(test, "predictions", "Class")
 
 
 
