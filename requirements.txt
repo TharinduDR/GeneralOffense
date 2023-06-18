@@ -1,3 +1,7 @@
 deepoffense
 datasets
 offensivenn
+einops
+accelerate
+langchain
+bitsandbytes
