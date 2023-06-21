@@ -37,10 +37,13 @@ final_predictions = []
 
 for index, row in test.iterrows():
     question = "Is this comment offensive or not? Comment: " + row['Text']
-    response = llm_chain.run(question)
-    if "not offensive" in response:
-        final_predictions.append("NOT")
-    else:
+    try:
+        response = llm_chain.run(question)
+        if "not offensive" in response:
+            final_predictions.append("NOT")
+        else:
+            final_predictions.append("OFF")
+    except AssertionError:
         final_predictions.append("OFF")
 
 test['predictions'] = final_predictions
